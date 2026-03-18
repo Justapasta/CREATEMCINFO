@@ -5,169 +5,182 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Perú MC</title>
 
-<!-- Iconos -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #0f172a, #020617);
-        color: white;
-        text-align: center;
-        overflow-x: hidden;
-    }
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: white;
+    text-align: center;
+}
 
-    .container {
-        padding: 40px 20px;
-        animation: fadeIn 1.5s ease;
-    }
+/* Fondo animado */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #38bdf8 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveBg 20s linear infinite;
+    opacity: 0.1;
+}
 
-    h1 {
-        font-size: 3em;
-        color: #38bdf8;
-        animation: slideDown 1s ease;
-    }
+@keyframes moveBg {
+    from {transform: translate(0,0);}
+    to {transform: translate(-200px,-200px);}
+}
 
-    h2 {
-        color: #22c55e;
-    }
+.container {
+    padding: 40px 20px;
+}
 
-    .card {
-        background: rgba(255,255,255,0.05);
-        backdrop-filter: blur(10px);
-        padding: 20px;
-        margin: 20px auto;
-        border-radius: 15px;
-        max-width: 600px;
-        box-shadow: 0 0 25px rgba(0,0,0,0.6);
-        transition: 0.3s;
-    }
+h1 {
+    font-size: 3em;
+    color: #38bdf8;
+}
 
-    .card:hover {
-        transform: translateY(-5px) scale(1.02);
-    }
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 15px;
+    max-width: 600px;
+    transition: 0.3s;
+}
 
-    .btn {
-        display: inline-block;
-        padding: 12px 25px;
-        border-radius: 10px;
-        margin-top: 15px;
-        font-weight: bold;
-        transition: 0.3s;
-        text-decoration: none;
-    }
+.card:hover {
+    transform: scale(1.03);
+}
 
-    .download {
-        background: #22c55e;
-        color: black;
-    }
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
 
-    .download:hover {
-        background: #16a34a;
-    }
+.download {background:#22c55e;color:black;}
+.discord {background:#5865F2;color:white;}
+.copy {background:#f87171;color:white;}
 
-    .discord {
-        background: #5865F2;
-        color: white;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-    }
+.btn:hover {transform: scale(1.1);}
 
-    .discord:hover {
-        background: #4752c4;
-    }
+/* Música botón */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #38bdf8;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
-    .ip {
-        font-size: 1.3em;
-        color: #f87171;
-        margin-top: 10px;
-    }
+/* Animación texto copiado */
+.toast {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: black;
+    padding: 10px 15px;
+    border-radius: 10px;
+    opacity: 0;
+    transition: 0.3s;
+}
 
-    /* Botón música */
-    .music-btn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #38bdf8;
-        border: none;
-        padding: 15px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 18px;
-        box-shadow: 0 0 10px black;
-    }
-
-    /* Animaciones */
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
-
-    @keyframes slideDown {
-        from {transform: translateY(-30px); opacity:0;}
-        to {transform: translateY(0); opacity:1;}
-    }
-
+.toast.show {
+    opacity: 1;
+}
 </style>
 </head>
 
 <body>
 
-<!-- Música -->
 <audio id="music" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Botón para activar música -->
-<button class="music-btn" onclick="toggleMusic()">
-    <i class="fas fa-music"></i>
-</button>
-
 <div class="container">
     <h1>🔥 CREATE PERÚ MC 🔥</h1>
-    <h2>Survival Técnico con Mod Create</h2>
-
-    <div class="card">
-        <h2>⚙️ Versión</h2>
-        <p>NEOFORGE 1.21.1 (BUILD #219 latest)</p>
-    </div>
+    <h2>Survival Técnico con Create</h2>
 
     <div class="card">
         <h2>📦 Modpack</h2>
         <a href="https://www.mediafire.com/file/7v8oxi7c5cx6ita/ModpackCreate.zip/file" target="_blank" class="btn download">
-            Descargar Modpack
+            Descargar
         </a>
-        <p>Colocar en carpeta de mods</p>
     </div>
 
     <div class="card">
-        <h2>🌐 IP del Servidor</h2>
-        <p class="ip">createperumc.bean.pe</p>
+        <h2>🌐 IP</h2>
+        <p id="ip">createperumc.bean.pe</p>
+        <button class="btn copy" onclick="copyIP()">
+            <i class="fas fa-copy"></i> Copiar IP
+        </button>
+
         <p>IP Alternativa:</p>
-        <p class="ip">45.58.126.118:24562</p>
+        <p id="ip2">45.58.126.118:24562</p>
+        <button class="btn copy" onclick="copyIP2()">
+            <i class="fas fa-copy"></i> Copiar IP Numérica
+        </button>
     </div>
 
     <div class="card">
         <h2>💬 Discord</h2>
         <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
-            <i class="fab fa-discord"></i> Unirse al Discord
+            <i class="fab fa-discord"></i> Unirse
         </a>
     </div>
-
 </div>
 
-<script>
-    let music = document.getElementById("music");
+<!-- Botón música -->
+<button class="music-btn" onclick="toggleMusic()">
+    <i class="fas fa-music"></i>
+</button>
 
-    function toggleMusic() {
-        if (music.paused) {
-            music.play();
-        } else {
-            music.pause();
-        }
+<div id="toast" class="toast">Copiado!</div>
+
+<script>
+let music = document.getElementById("music");
+
+/* Forzar reproducción al primer click */
+document.addEventListener("click", () => {
+    music.play().catch(()=>{});
+}, { once: true });
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+    } else {
+        music.pause();
     }
+}
+
+/* Copiar IP */
+function copyIP() {
+    navigator.clipboard.writeText(document.getElementById("ip").innerText);
+    showToast();
+}
+
+function copyIP2() {
+    navigator.clipboard.writeText(document.getElementById("ip2").innerText);
+    showToast();
+}
+
+function showToast() {
+    let toast = document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2000);
+}
 </script>
 
 </body>
