@@ -1,187 +1,390 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Perú MC</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREATE PERÚ MC 🔥 | Survival Técnico con Create</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --red: #e30613;
+            --white: #ffffff;
+            --green: #22c55e;
+            --dark: #0a0a0a;
+        }
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #020617, #0f172a);
-    color: white;
-    text-align: center;
-}
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-/* Fondo animado */
-body::before {
-    content: "";
-    position: fixed;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, #38bdf8 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: moveBg 20s linear infinite;
-    opacity: 0.1;
-}
+        /* Fondo animado mejorado */
+        canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
 
-@keyframes moveBg {
-    from {transform: translate(0,0);}
-    to {transform: translate(-200px,-200px);}
-}
+        /* Hero Section - Impacto inmediato */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(227,6,19,0.85), rgba(0,0,0,0.95));
+            padding: 20px;
+        }
 
-.container {
-    padding: 40px 20px;
-}
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1.2s ease-out;
+        }
 
-h1 {
-    font-size: 3em;
-    color: #38bdf8;
-}
+        .title {
+            font-size: clamp(2.8rem, 8vw, 5.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(90deg, #e30613, #ffffff, #e30613);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(227,6,19,0.8);
+            margin-bottom: 10px;
+        }
 
-.card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    margin: 20px auto;
-    border-radius: 15px;
-    max-width: 600px;
-    transition: 0.3s;
-}
+        .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
 
-.card:hover {
-    transform: scale(1.03);
-}
+        .flag {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: flagWave 3s infinite ease-in-out;
+        }
 
-/* Botones */
-.btn {
-    display: inline-block;
-    padding: 12px 20px;
-    border-radius: 10px;
-    margin: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-}
+        /* Cards modernas */
+        .section {
+            padding: 80px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
 
-.download {background:#22c55e;color:black;}
-.discord {background:#5865F2;color:white;}
-.copy {background:#f87171;color:white;}
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
 
-.btn:hover {transform: scale(1.1);}
+        .card {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-/* Música botón */
-.music-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #38bdf8;
-    border: none;
-    padding: 15px;
-    border-radius: 50%;
-    cursor: pointer;
-}
+        .card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(227,6,19,0.4);
+            border-color: var(--red);
+        }
 
-/* Animación texto copiado */
-.toast {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    background: black;
-    padding: 10px 15px;
-    border-radius: 10px;
-    opacity: 0;
-    transition: 0.3s;
-}
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--green);
+        }
 
-.toast.show {
-    opacity: 1;
-}
-</style>
+        /* Botones premium */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 10px 30px -10px currentColor;
+        }
+
+        .download {
+            background: var(--green);
+            color: black;
+        }
+
+        .discord {
+            background: #5865F2;
+            color: white;
+        }
+
+        .copy {
+            background: var(--red);
+            color: white;
+        }
+
+        /* IP */
+        .ip-container {
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            user-select: all;
+        }
+
+        /* Música */
+        .music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: var(--red);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(227,6,19,0.5);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+
+        .music-btn:hover {
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 110px;
+            right: 30px;
+            background: #111;
+            color: #22c55e;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            z-index: 200;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes flagWave {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        .fade-in {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+    </style>
 </head>
-
 <body>
 
-<audio id="music" loop>
-    <source src="music.mp3" type="audio/mpeg">
-</audio>
+    <canvas id="bg"></canvas>
 
-<div class="container">
-    <h1>🔥 CREATE PERÚ MC 🔥</h1>
-    <h2>Survival Técnico con Create</h2>
+    <audio id="music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
 
-    <div class="card">
-        <h2>📦 Modpack</h2>
-        <a href="https://www.mediafire.com/file/7v8oxi7c5cx6ita/ModpackCreate.zip/file" target="_blank" class="btn download">
-            Descargar
-        </a>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="flag">🇵🇪</div>
+            <h1 class="title">CREATE PERÚ MC</h1>
+            <p class="subtitle">🔥 Survival Técnico con Create Mod 🔥<br>¡Construye, automatiza y domina Perú!</p>
+            
+            <div style="margin-top: 40px;">
+                <a href="https://www.mediafire.com/file/7v8oxi7c5cx6ita/ModpackCreate.zip/file" target="_blank" class="btn download">
+                    <i class="fas fa-download"></i> Descargar Modpack
+                </a>
+                <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
+                    <i class="fab fa-discord"></i> Unirse al Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido principal -->
+    <div class="section">
+        <div class="cards">
+
+            <!-- Card IP -->
+            <div class="card fade-in">
+                <h2><i class="fas fa-server"></i> IP del Servidor</h2>
+                <div class="ip-container" id="ip">createperumc.bean.pe</div>
+                <button class="btn copy" onclick="copyIP()">
+                    <i class="fas fa-copy"></i> Copiar IP
+                </button>
+
+                <p style="margin-top: 25px; opacity: 0.8;">IP Alternativa:</p>
+                <div class="ip-container" id="ip2">45.58.126.118:24562</div>
+                <button class="btn copy" onclick="copyIP2()">
+                    <i class="fas fa-copy"></i> Copiar Numérica
+                </button>
+            </div>
+
+            <!-- Card Modpack -->
+            <div class="card fade-in" style="animation-delay: 0.2s;">
+                <h2><i class="fas fa-box"></i> Modpack</h2>
+                <p style="margin: 20px 0; font-size: 1.1rem; opacity: 0.9;">
+                    Versión optimizada de Create para Survival Técnico.<br>
+                    Automatización, fábricas y diversión sin límites.
+                </p>
+                <a href="https://www.mediafire.com/file/7v8oxi7c5cx6ita/ModpackCreate.zip/file" target="_blank" class="btn download">
+                    <i class="fas fa-download"></i> Descargar Ahora
+                </a>
+            </div>
+
+            <!-- Card Discord -->
+            <div class="card fade-in" style="animation-delay: 0.4s;">
+                <h2><i class="fab fa-discord"></i> Comunidad</h2>
+                <p style="margin: 25px 0; font-size: 1.1rem; opacity: 0.9;">
+                    Únete a nuestra comunidad peruana.<br>
+                    Eventos, ayuda, memes y más.
+                </p>
+                <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
+                    <i class="fab fa-discord"></i> Entrar al Discord
+                </a>
+            </div>
+
+        </div>
     </div>
 
-    <div class="card">
-        <h2>🌐 IP</h2>
-        <p id="ip">createperumc.bean.pe</p>
-        <button class="btn copy" onclick="copyIP()">
-            <i class="fas fa-copy"></i> Copiar IP
-        </button>
+    <button class="music-btn" onclick="toggleMusic()" title="Música de fondo">
+        🎵
+    </button>
 
-        <p>IP Alternativa:</p>
-        <p id="ip2">45.58.126.118:24562</p>
-        <button class="btn copy" onclick="copyIP2()">
-            <i class="fas fa-copy"></i> Copiar IP Numérica
-        </button>
-    </div>
+    <div id="toast" class="toast">✅ ¡Copiado al portapapeles!</div>
 
-    <div class="card">
-        <h2>💬 Discord</h2>
-        <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
-            <i class="fab fa-discord"></i> Unirse
-        </a>
-    </div>
-</div>
+    <script>
+        // Fondo de partículas mejorado y más bonito
+        const canvas = document.getElementById("bg");
+        const ctx = canvas.getContext("2d");
+        
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resize);
+        resize();
 
-<!-- Botón música -->
-<button class="music-btn" onclick="toggleMusic()">
-    <i class="fas fa-music"></i>
-</button>
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speed = Math.random() * 0.8 + 0.3;
+                this.opacity = Math.random() * 0.6 + 0.4;
+                this.hue = Math.random() > 0.5 ? 0 : 120; // rojo o verde
+            }
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = `hsl(${this.hue}, 100%, 80%)`;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `hsl(${this.hue}, 100%, 70%)`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
 
-<div id="toast" class="toast">Copiado!</div>
+        for (let i = 0; i < 120; i++) {
+            particles.push(new Particle());
+        }
 
-<script>
-let music = document.getElementById("music");
+        function animate() {
+            ctx.fillStyle = "rgba(10,10,10,0.15)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        animate();
 
-/* Forzar reproducción al primer click */
-document.addEventListener("click", () => {
-    music.play().catch(()=>{});
-}, { once: true });
+        // Música
+        let music = document.getElementById("music");
+        document.addEventListener("click", () => {
+            if (music.paused) music.play().catch(() => {});
+        }, { once: true });
 
-function toggleMusic() {
-    if (music.paused) {
-        music.play();
-    } else {
-        music.pause();
-    }
-}
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
 
-/* Copiar IP */
-function copyIP() {
-    navigator.clipboard.writeText(document.getElementById("ip").innerText);
-    showToast();
-}
+        // Copiar IP
+        function copyIP() {
+            navigator.clipboard.writeText(document.getElementById("ip").innerText);
+            showToast();
+        }
 
-function copyIP2() {
-    navigator.clipboard.writeText(document.getElementById("ip2").innerText);
-    showToast();
-}
+        function copyIP2() {
+            navigator.clipboard.writeText(document.getElementById("ip2").innerText);
+            showToast();
+        }
 
-function showToast() {
-    let toast = document.getElementById("toast");
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 2000);
-}
-</script>
-
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2500);
+        }
+    </script>
 </body>
 </html>
