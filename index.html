@@ -5,22 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Perú MC</title>
 
+<!-- Iconos -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 <style>
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #0f172a, #1e293b);
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #0f172a, #020617);
         color: white;
         text-align: center;
+        overflow-x: hidden;
     }
 
     .container {
         padding: 40px 20px;
+        animation: fadeIn 1.5s ease;
     }
 
     h1 {
         font-size: 3em;
         color: #38bdf8;
+        animation: slideDown 1s ease;
     }
 
     h2 {
@@ -29,37 +35,48 @@
 
     .card {
         background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(10px);
         padding: 20px;
         margin: 20px auto;
         border-radius: 15px;
         max-width: 600px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        box-shadow: 0 0 25px rgba(0,0,0,0.6);
+        transition: 0.3s;
     }
 
-    a {
-        color: #facc15;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    a:hover {
-        text-decoration: underline;
+    .card:hover {
+        transform: translateY(-5px) scale(1.02);
     }
 
     .btn {
         display: inline-block;
         padding: 12px 25px;
-        background: #22c55e;
-        color: black;
         border-radius: 10px;
         margin-top: 15px;
         font-weight: bold;
         transition: 0.3s;
+        text-decoration: none;
     }
 
-    .btn:hover {
+    .download {
+        background: #22c55e;
+        color: black;
+    }
+
+    .download:hover {
         background: #16a34a;
-        transform: scale(1.05);
+    }
+
+    .discord {
+        background: #5865F2;
+        color: white;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .discord:hover {
+        background: #4752c4;
     }
 
     .ip {
@@ -68,21 +85,45 @@
         margin-top: 10px;
     }
 
-    footer {
-        margin-top: 40px;
-        font-size: 0.9em;
-        color: #94a3b8;
+    /* Botón música */
+    .music-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #38bdf8;
+        border: none;
+        padding: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        box-shadow: 0 0 10px black;
     }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    @keyframes slideDown {
+        from {transform: translateY(-30px); opacity:0;}
+        to {transform: translateY(0); opacity:1;}
+    }
+
 </style>
 </head>
 
 <body>
 
-<!-- Música de fondo -->
-<audio autoplay loop>
+<!-- Música -->
+<audio id="music" loop>
     <source src="music.mp3" type="audio/mpeg">
-    Tu navegador no soporta audio.
 </audio>
+
+<!-- Botón para activar música -->
+<button class="music-btn" onclick="toggleMusic()">
+    <i class="fas fa-music"></i>
+</button>
 
 <div class="container">
     <h1>🔥 CREATE PERÚ MC 🔥</h1>
@@ -95,33 +136,39 @@
 
     <div class="card">
         <h2>📦 Modpack</h2>
-        <p>Descarga el modpack aquí:</p>
-        <a href="https://www.mediafire.com/file/7v8oxi7c5cx6ita/ModpackCreate.zip/file" target="_blank" class="btn">
+        <a href="https://www.mediafire.com/file/7v8oxi7c5cx6ita/ModpackCreate.zip/file" target="_blank" class="btn download">
             Descargar Modpack
         </a>
-        <p style="margin-top:10px;">Colocar en carpeta de mods</p>
+        <p>Colocar en carpeta de mods</p>
     </div>
 
     <div class="card">
         <h2>🌐 IP del Servidor</h2>
         <p class="ip">createperumc.bean.pe</p>
-        <p>Si no funciona, usa la IP numérica:</p>
+        <p>IP Alternativa:</p>
         <p class="ip">45.58.126.118:24562</p>
     </div>
 
     <div class="card">
-        <h2>🚀 Características</h2>
-        <p>✔ Survival técnico avanzado</p>
-        <p>✔ Sistema de economía</p>
-        <p>✔ Comandos útiles (home, tpa, shop)</p>
-        <p>✔ Comunidad activa</p>
-        <p>✔ Servidor 24/7 en Perú</p>
+        <h2>💬 Discord</h2>
+        <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
+            <i class="fab fa-discord"></i> Unirse al Discord
+        </a>
     </div>
 
-    <footer>
-        © 2026 Create Perú MC - Todos los derechos reservados
-    </footer>
 </div>
+
+<script>
+    let music = document.getElementById("music");
+
+    function toggleMusic() {
+        if (music.paused) {
+            music.play();
+        } else {
+            music.pause();
+        }
+    }
+</script>
 
 </body>
 </html>
