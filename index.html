@@ -3,458 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>☢️ CREATE PERÚ MC — TEMPORADA 3: ORIGEN DEL MUNDO ☢️</title>
+    <title>☢️ CREATE PERÚ MC — ORIGEN DEL MUNDO</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --red: #e30613;
             --toxic: #39ff14;
-            --dark: #0a0a0a;
-            --deep: #050505;
-            --accent: #ff004d;
+            --red: #e30613;
+            --dark: #050505;
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--deep);
+            font-family: system-ui, sans-serif;
+            background: var(--dark);
             color: #ddd;
-            overflow-x: hidden;
             line-height: 1.6;
         }
-
-        /* Fondo radiactivo con partículas */
         .bg-radiation {
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(circle at 50% 30%, rgba(57, 255, 20, 0.08) 0%, transparent 70%),
-                linear-gradient(180deg, #0a0a0a 0%, #1a0f0f 100%);
+            background: radial-gradient(circle at 50% 20%, rgba(57,255,20,0.1), transparent 70%);
             z-index: -2;
-            pointer-events: none;
         }
-
-        .scanline {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(transparent 50%, rgba(57, 255, 20, 0.03) 50%);
-            background-size: 100% 4px;
-            animation: scan 8s linear infinite;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        /* Glitch effect */
-        .glitch {
-            position: relative;
-            color: var(--toxic);
-            font-weight: 900;
-            letter-spacing: -2px;
-            animation: glitch-skew 4s infinite linear alternate-reverse;
-        }
-
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .glitch::before {
-            color: var(--red);
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-        }
-
-        .glitch::after {
-            color: #00ffff;
-            animation: glitch-anim2 2.5s infinite linear alternate-reverse;
-            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-        }
-
-        @keyframes glitch-anim {
-            0% { transform: translate(-2px, 2px); }
-            20% { transform: translate(-4px, -2px); }
-            40% { transform: translate(4px, 2px); }
-        }
-
-        @keyframes glitch-anim2 {
-            0% { transform: translate(2px, -2px); }
-            30% { transform: translate(-2px, 4px); }
-        }
-
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
             text-align: center;
+            position: relative;
             padding: 20px;
         }
-
         .hero::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; /* Cambia por una imagen post-apo real */
-            filter: brightness(0.3) contrast(1.2);
+            background: url('https://imgs.search.brave.com/w30IIh54oendgYA09T92sG8c42R0koC_XjOApVhOExI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/OW1pbmVjcmFmdC5u/ZXQvd3AtY29udGVu/dC91cGxvYWRzLzIw/MjMvMDIvRnVuZ2Fs/LUluZmVjdGlvbi1T/cG9yZS1Nb2QtU2Ny/ZWVuc2hvdHMtMTMu/anBn') center/cover no-repeat; /* ← CAMBIA ESTA URL */
+            filter: brightness(0.3) contrast(1.4) saturate(0.9);
             z-index: -1;
         }
-
-        .hero-content {
-            max-width: 900px;
-            z-index: 2;
-        }
-
+        .hero-content { max-width: 860px; z-index: 2; }
         .title {
-            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-size: clamp(2.8rem, 9vw, 6.5rem);
             font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 15px;
+            color: var(--toxic);
             text-shadow: 0 0 40px var(--toxic);
         }
-
-        .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
-
         .countdown {
-            font-size: 2rem;
+            font-size: clamp(1.4rem, 5vw, 2.2rem);
             color: var(--toxic);
+            margin: 25px 0;
             font-weight: bold;
-            text-shadow: 0 0 20px var(--toxic);
-            margin: 30px 0;
-            letter-spacing: 3px;
         }
-
         .btn {
+            padding: 14px 28px;
+            margin: 8px;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            margin: 10px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
+            gap: 10px;
+            transition: 0.3s;
         }
+        .download { background: var(--toxic); color: #000; }
+        .discord { background: #5865F2; color: white; }
+        .btn:hover { transform: scale(1.08); }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: translateX(-150%);
-            transition: transform 0.6s;
-        }
+        .section { padding: 70px 20px; max-width: 1100px; margin: auto; }
+        h2 { color: var(--toxic); font-size: 2.4rem; margin-bottom: 30px; text-align: center; }
 
-        .btn:hover::before {
-            transform: translateX(300%);
-        }
-
-        .download {
-            background: linear-gradient(135deg, var(--toxic), #22c55e);
-            color: #000;
-            box-shadow: 0 0 30px rgba(57, 255, 20, 0.6);
-        }
-
-        .discord {
-            background: #5865F2;
-            color: white;
-            box-shadow: 0 0 30px rgba(88, 101, 242, 0.6);
-        }
-
-        .btn:hover {
-            transform: translateY(-6px) scale(1.08);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-        }
-
-        .section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
-            color: var(--toxic);
-            text-align: center;
-            text-shadow: 0 0 15px var(--toxic);
-        }
-
-        .lore-text {
-            max-width: 800px;
-            margin: 0 auto 60px;
-            font-size: 1.25rem;
-            opacity: 0.9;
-            text-align: left;
-        }
-
-        .cards {
+        .lore-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .lore-card {
+            background: rgba(20,20,20,0.8);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid rgba(57,255,20,0.3);
         }
 
-        .card {
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            border-radius: 20px;
-            padding: 35px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
+        .cards { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 25px; 
         }
-
-        .card:hover {
-            border-color: var(--toxic);
-            transform: translateY(-15px);
-            box-shadow: 0 25px 60px rgba(57, 255, 20, 0.25);
+        .card { 
+            background: rgba(255,255,255,0.05); 
+            padding: 30px; 
+            border-radius: 18px; 
+            border: 1px solid rgba(57,255,20,0.2);
         }
-
         .ip {
             background: #111;
-            border: 2px dashed var(--toxic);
-            padding: 16px;
-            border-radius: 12px;
-            font-family: 'Courier New', monospace;
-            font-size: 1.3rem;
-            margin: 15px 0;
+            padding: 14px;
+            border-radius: 10px;
+            font-family: monospace;
             color: var(--toxic);
+            margin: 12px 0;
         }
-
-        .trailer {
-            text-align: center;
-        }
-
         .trailer iframe {
             width: 100%;
-            max-width: 920px;
-            height: 520px;
-            border-radius: 20px;
-            border: 4px solid rgba(57, 255, 20, 0.3);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
+            max-width: 860px;
+            height: 420px; /* más pequeño en móvil */
+            border-radius: 16px;
+            border: 3px solid rgba(57,255,20,0.4);
         }
-
-        .particles {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        footer {
-            padding: 60px 20px;
-            text-align: center;
-            opacity: 0.7;
-            font-size: 0.95rem;
+        @media (max-width: 640px) {
+            .section { padding: 50px 15px; }
+            .lore-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-
     <div class="bg-radiation"></div>
-    <div class="scanline"></div>
-    <div class="particles" id="particles"></div>
 
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="title glitch" data-text="CREATE PERÚ MC">CREATE PERÚ MC</h1>
-            <p class="subtitle">
-                ☢️ <strong>TEMPORADA 3 — ORIGEN DEL MUNDO</strong><br>
-                20 DE ABRIL 2026<br>
-                El reactor colapsó. La tecnología murió.<br>
-                Solo queda lo mecánico... y tú.
-            </p>
+            <h1 class="title">CREATE PERÚ MC</h1>
+            <p style="font-size:1.3rem; margin:15px 0;">☢️ TEMPORADA 3 — ORIGEN DEL MUNDO ☢️<br>20 DE ABRIL 2026</p>
+            <div class="countdown" id="countdown"></div>
             
-            <div class="countdown" id="countdown">⏳ Calculando tiempo hasta el colapso...</div>
-
-            <a href="https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file" class="btn download" id="modpackLink">
+            <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" class="btn download">
                 <i class="fas fa-download"></i> DESCARGAR MODPACK
             </a>
             <a href="https://discord.gg/sT6UbNVuU3" class="btn discord">
-                <i class="fab fa-discord"></i> UNIRSE AL REFUGIO
+                <i class="fab fa-discord"></i> DISCORD
             </a>
         </div>
     </section>
 
     <!-- TRAILER -->
     <div class="section trailer">
-        <h2 class="glitch" data-text="EL INICIO DEL FIN">EL INICIO DEL FIN</h2>
-        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Trailer" allowfullscreen></iframe>
-        <p style="margin-top: 25px; opacity: 0.8; font-size: 1.1rem;">
-            Hace años... ocurrió lo impensable.
-        </p>
+        <h2>Trailer Oficial</h2>
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
     </div>
 
-    <!-- LORE SECTIONS -->
+    <!-- LORE (más compacto) -->
     <div class="section">
-        <div class="lore-text">
-            <h2>🌍 EL COLAPSO</h2>
-            <p>Un reactor de escala masiva colapsó. La radiación se filtró lentamente... silenciosa... imparable.<br>
-            La humanidad perdió su mayor ventaja: el control de la tecnología.</p>
-        </div>
-
-        <div class="lore-text">
-            <h2>🧬 LA MUTACIÓN DEL MUNDO</h2>
-            <p>Hongos desconocidos. Virus evolucionados. Una superficie hostil y mortal.<br>
-            El mundo ya no era hogar. Era territorio enemigo.</p>
-        </div>
-
-        <div class="lore-text">
-            <h2>🏚️ EL ÚLTIMO REFUGIO</h2>
-            <p>En las profundidades construimos el búnker. Experimentamos. Estudiamos. Sobrevivimos... parcialmente.</p>
-        </div>
-
-        <div class="lore-text">
-            <h2>🧍‍♂️ PROYECTO: NUEVA GENERACIÓN</h2>
-            <p>Crearon individuos diseñados para este nuevo mundo.<br>
-            <strong>Más resistentes. Más adaptables.</strong><br>
-            <strong>Eso eres tú.</strong></p>
+        <h2>La Historia</h2>
+        <div class="lore-grid">
+            <div class="lore-card"><strong>🌍 EL COLAPSO</strong><br>El reactor falló. La radiación se filtró lentamente...</div>
+            <div class="lore-card"><strong>🧬 MUTACIÓN</strong><br>Hongos extraños, virus nuevos, superficie mortal.</div>
+            <div class="lore-card"><strong>🏚️ EL REFUGIO</strong><br>Construimos el búnker. Experimentamos con la radiación.</div>
+            <div class="lore-card"><strong>🧍 NUEVA GENERACIÓN</strong><br>Tú no llegas... eres creado para sobrevivir.</div>
         </div>
     </div>
 
-    <!-- INFO CARDS -->
+    <!-- INFO -->
     <div class="section">
-        <h2>ÚNETE AL REFUGIO</h2>
+        <h2>Únete al Refugio</h2>
         <div class="cards">
             <div class="card">
                 <h3>Servidor</h3>
                 <div class="ip" id="ip">createperumc.bean.pe</div>
-                <button onclick="copyIP('ip')" class="btn download" style="width:100%; justify-content:center;">Copiar IP</button>
-                <div class="ip" id="ip2">45.58.126.118:24562</div>
-                <button onclick="copyIP('ip2')" class="btn download" style="width:100%; justify-content:center;">Copiar IP Numérica</button>
+                <button onclick="copyIP('ip')" class="btn download" style="width:100%">Copiar IP</button>
             </div>
-
             <div class="card">
                 <h3>Modpack</h3>
-                <p style="opacity:0.85; margin:20px 0;">
-                    Enfocado en <strong>Create + addons</strong>.<br>
-                    Solo mecánica robusta sobrevive.
-                </p>
-                <a href="https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file" id="modpackLink2" class="btn download" style="width:100%; justify-content:center;">
-                    <i class="fas fa-download"></i> Descargar Modpack
-                </a>
+                <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" class="btn download" style="width:100%">Descargar</a>
             </div>
-
             <div class="card">
                 <h3>Comunidad</h3>
-                <p style="opacity:0.85; margin:20px 0;">
-                    Eventos, soporte y supervivientes como tú.
-                </p>
-                <a href="https://discord.gg/sT6UbNVuU3" class="btn discord" style="width:100%; justify-content:center;">
-                    <i class="fab fa-discord"></i> Entrar al Discord
-                </a>
+                <a href="https://discord.gg/sT6UbNVuU3" class="btn discord" style="width:100%">Entrar al Discord</a>
             </div>
         </div>
     </div>
 
-    <footer>
-        ☢️ El mundo murió… pero algo nuevo está comenzando.<br>
-        Create Perú MC — Temporada 3 • 2026
-    </footer>
-
     <script>
-        // Config
-        const CONFIG = {
-            modpack: "https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file",
-            release: "2026-04-20T00:00:00"
-        };
-
-        // Enlaces
-        document.getElementById("modpackLink").href = CONFIG.modpack;
-        document.getElementById("modpackLink2").href = CONFIG.modpack;
-
-        // Countdown épico
+        // Countdown y copyIP (igual que antes)
+        const CONFIG = { release: "2026-04-20T00:00:00" };
         function updateCountdown() {
             const cd = document.getElementById("countdown");
-            const release = new Date(CONFIG.release);
-            const now = new Date();
-            const diff = release - now;
-
+            const diff = new Date(CONFIG.release) - new Date();
             if (diff <= 0) {
-                cd.innerHTML = "☢️ TEMPORADA 3 YA ESTÁ AQUÍ ☢️";
-                cd.style.color = "#e30613";
+                cd.textContent = "☢️ ¡YA ESTÁ AQUÍ! ☢️";
                 return;
             }
-
-            const days = Math.floor(diff / 86400000);
-            const hours = Math.floor((diff % 86400000) / 3600000);
-            const minutes = Math.floor((diff % 3600000) / 60000);
-
-            cd.innerHTML = `⏳ EL COLAPSO FINAL EN: <strong>${days}d ${hours}h ${minutes}m</strong>`;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            cd.textContent = `⏳ Lanzamiento en ${d}d ${h}h ${m}m`;
         }
-        setInterval(updateCountdown, 1000);
+        setInterval(updateCountdown, 60000);
         updateCountdown();
 
-        // Copiar IP con feedback
         function copyIP(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const btns = document.querySelectorAll(`button[onclick="copyIP('${id}')"]`);
-                btns.forEach(btn => {
-                    const original = btn.innerHTML;
-                    btn.innerHTML = "✅ COPIADO";
-                    btn.style.background = "#22c55e";
-                    setTimeout(() => {
-                        btn.innerHTML = original;
-                        btn.style.background = "";
-                    }, 2000);
-                });
-            });
+            navigator.clipboard.writeText(document.getElementById(id).innerText);
+            alert("✅ IP copiada!");
         }
-
-        // Partículas tóxicas simples (CSS + JS ligero)
-        function createParticle() {
-            const p = document.createElement("div");
-            p.style.position = "absolute";
-            p.style.width = "4px";
-            p.style.height = "4px";
-            p.style.background = "rgba(57, 255, 20, 0.6)";
-            p.style.borderRadius = "50%";
-            p.style.left = Math.random() * 100 + "vw";
-            p.style.top = "-10px";
-            p.style.opacity = Math.random() * 0.6 + 0.3;
-            p.style.animation = `fall ${Math.random() * 15 + 10}s linear forwards`;
-            document.getElementById("particles").appendChild(p);
-
-            setTimeout(() => p.remove(), 25000);
-        }
-
-        setInterval(() => {
-            if (Math.random() > 0.4) createParticle();
-        }, 120);
-
-        // Añadir keyframes para partículas
-        const style = document.createElement("style");
-        style.innerHTML = `
-            @keyframes fall {
-                to {
-                    transform: translateY(110vh);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
