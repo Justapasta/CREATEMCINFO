@@ -8,135 +8,122 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-:root{
---red:#e30613;
---green:#22c55e;
---dark:#050505;
---toxic:#39ff14;
+:root {
+    --red:#e30613;
+    --green:#22c55e;
+    --dark:#0a0a0a;
+    --toxic:#39ff14;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:'Segoe UI',system-ui;
-background:black;
-color:white;
-text-align:center;
-overflow-x:hidden;
-}
-
-/* GLITCH */
-.glitch{
-position:relative;
-font-weight:900;
-font-size:clamp(3rem,10vw,5rem);
-}
-
-.glitch::before,.glitch::after{
-content:attr(data-text);
-position:absolute;
-left:0;
-width:100%;
-overflow:hidden;
-}
-
-.glitch::before{
-color:#0ff;
-animation:glitch1 2s infinite linear alternate-reverse;
-}
-
-.glitch::after{
-color:#f00;
-animation:glitch2 2s infinite linear alternate-reverse;
-}
-
-@keyframes glitch1{
-0%{clip-path:inset(0 0 90% 0);}
-50%{clip-path:inset(40% 0 30% 0);}
-100%{clip-path:inset(80% 0 5% 0);}
-}
-
-@keyframes glitch2{
-0%{clip-path:inset(80% 0 5% 0);}
-50%{clip-path:inset(20% 0 50% 0);}
-100%{clip-path:inset(0 0 90% 0);}
+    font-family:'Segoe UI',system-ui;
+    background:var(--dark);
+    color:white;
+    text-align:center;
 }
 
 /* HERO */
 .hero{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-background:radial-gradient(circle,rgba(57,255,20,0.2),black);
-padding:20px;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg, rgba(10,10,10,0.95), rgba(20,20,20,0.95));
+    padding:20px;
 }
 
-.subtitle{margin:20px 0;opacity:.9}
+.hero-content{
+    max-width:700px;
+    animation:fadeIn 1s ease;
+}
+
+.title{
+    font-size:clamp(2.8rem,8vw,4.5rem);
+    font-weight:900;
+    letter-spacing:-1px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    opacity:.85;
+    margin-bottom:25px;
+    line-height:1.5;
+}
 
 /* COUNTDOWN */
 .countdown{
-font-size:1.5rem;
-margin:20px 0;
-color:var(--toxic);
-text-shadow:0 0 10px var(--toxic);
-}
-
-/* BUNKER PANEL */
-.bunker{
-border:1px solid rgba(57,255,20,0.3);
-padding:20px;
-border-radius:15px;
-background:rgba(0,0,0,0.7);
-box-shadow:0 0 30px rgba(57,255,20,0.2);
+    margin:20px 0;
+    font-size:1.2rem;
+    color:var(--toxic);
 }
 
 /* BOTONES */
 .btn{
-display:inline-block;
-padding:15px 25px;
-margin:10px;
-border-radius:50px;
-font-weight:bold;
-text-decoration:none;
-transition:.3s;
+    display:inline-flex;
+    gap:10px;
+    padding:14px 22px;
+    border-radius:40px;
+    font-weight:bold;
+    text-decoration:none;
+    margin:8px;
+    transition:.3s;
 }
 
 .download{background:var(--green);color:black;}
-.discord{background:#5865F2;}
+.discord{background:#5865F2;color:white;}
 
-.btn:hover{transform:scale(1.1);}
+.btn:hover{transform:scale(1.05);}
+
+/* SECCIONES */
+.section{
+    padding:70px 20px;
+    max-width:1100px;
+    margin:auto;
+}
 
 /* TRAILER */
 .trailer iframe{
-width:100%;
-height:400px;
-border-radius:15px;
+    width:100%;
+    max-width:850px;
+    height:420px;
+    border-radius:16px;
+    border:none;
+    box-shadow:0 20px 50px rgba(0,0,0,0.6);
 }
 
 /* CARDS */
-.section{padding:60px 20px;}
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:25px;
+}
 
 .card{
-background:rgba(255,255,255,0.05);
-padding:30px;
-border-radius:20px;
-margin:20px auto;
-max-width:500px;
+    background:rgba(255,255,255,0.05);
+    border-radius:18px;
+    padding:30px;
+    transition:.3s;
 }
 
 .card:hover{
-box-shadow:0 0 30px rgba(57,255,20,0.3);
+    transform:translateY(-6px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
 }
 
 .ip{
-background:black;
-padding:10px;
-margin:10px 0;
-border-radius:10px;
-font-family:monospace;
+    background:black;
+    padding:12px;
+    border-radius:10px;
+    font-family:monospace;
+    margin:10px 0;
 }
 
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
 </style>
 </head>
 
@@ -144,36 +131,47 @@ font-family:monospace;
 
 <!-- HERO -->
 <section class="hero">
-<div class="bunker">
+<div class="hero-content">
 
-<h1 class="glitch" data-text="CREATE PERÚ MC">CREATE PERÚ MC</h1>
+<h1 class="title">CREATE PERÚ MC</h1>
 
 <p class="subtitle">
-☢️ TEMPORADA 3 ☢️<br>
-El mundo colapsó...<br>
-Solo lo mecánico sobrevive
+☢️ TEMPORADA 3 — 20 DE ABRIL<br>
+El mundo ya no es el mismo.<br>
+La tecnología avanzada colapsó…<br>
+solo lo mecánico sigue funcionando.
 </p>
 
-<div class="countdown" id="countdown">Cargando...</div>
+<div class="countdown" id="countdown"></div>
 
-<a href="#" id="modpackLink" class="btn download">Descargar Modpack</a>
-<a href="https://discord.gg/sT6UbNVuU3" class="btn discord">Discord</a>
+<a href="#" id="modpackLink" class="btn download">
+<i class="fas fa-download"></i> Descargar Modpack
+</a>
+
+<a href="https://discord.gg/sT6UbNVuU3" class="btn discord">
+<i class="fab fa-discord"></i> Discord
+</a>
 
 </div>
 </section>
 
 <!-- TRAILER -->
 <div class="section trailer">
-<h2>🎬 Trailer</h2>
+<h2 style="margin-bottom:25px;">Trailer Oficial</h2>
 
 <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+
+<p style="opacity:.7;margin-top:15px;">
+El inicio del nuevo mundo comienza aquí.
+</p>
 </div>
 
 <!-- INFO -->
 <div class="section">
+<div class="cards">
 
 <div class="card">
-<h2>🌐 IP</h2>
+<h2>Servidor</h2>
 <div class="ip" id="ip">createperumc.bean.pe</div>
 <button onclick="copy('ip')" class="btn download">Copiar</button>
 
@@ -182,42 +180,63 @@ Solo lo mecánico sobrevive
 </div>
 
 <div class="card">
-<h2>📦 Modpack</h2>
-<p>Optimizado para supervivencia post-apocalíptica.</p>
-<a href="#" id="modpackLink2" class="btn download">Descargar</a>
+<h2>Modpack</h2>
+<p style="opacity:.85;">
+Optimizado para una experiencia inmersiva basada en Create.<br>
+Enfocado en mecánicas, supervivencia y progreso técnico.
+</p>
+
+<a href="#" id="modpackLink2" class="btn download">
+Descargar
+</a>
 </div>
 
+<div class="card">
+<h2>Comunidad</h2>
+<p style="opacity:.85;">
+Eventos, soporte y comunidad activa.
+</p>
+
+<a href="https://discord.gg/sT6UbNVuU3" class="btn discord">
+Entrar
+</a>
+</div>
+
+</div>
 </div>
 
 <script>
 // CONFIG
 const CONFIG={
 modpack:"https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file",
-release:"2026-05-01T00:00:00"
+release:"2026-04-20T00:00:00"
 };
 
 // MODPACK
-document.getElementById("modpackLink").href=CONFIG.modpack;
-document.getElementById("modpackLink2").href=CONFIG.modpack;
+modpackLink.href=CONFIG.modpack;
+modpackLink2.href=CONFIG.modpack;
 
 // COUNTDOWN
 const cd=document.getElementById("countdown");
+
 setInterval(()=>{
 let diff=new Date(CONFIG.release)-new Date();
-if(diff<0){cd.innerHTML="🔥 YA DISPONIBLE 🔥";return;}
+
+if(diff<=0){
+cd.innerHTML="🔥 TEMPORADA 3 DISPONIBLE 🔥";
+return;
+}
 
 let d=Math.floor(diff/86400000);
 let h=Math.floor(diff/3600000)%24;
 let m=Math.floor(diff/60000)%60;
-let s=Math.floor(diff/1000)%60;
 
-cd.innerHTML=`⏳ ${d}d ${h}h ${m}m ${s}s`;
+cd.innerHTML=`⏳ Lanzamiento en ${d}d ${h}h ${m}m`;
 },1000);
 
 // COPY
 function copy(id){
 navigator.clipboard.writeText(document.getElementById(id).innerText);
-alert("Copiado!");
 }
 </script>
 
