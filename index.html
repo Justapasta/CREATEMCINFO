@@ -1,433 +1,1122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>☢️ CREATE PERÚ MC — TEMPORADA 3: ORIGEN DEL MUNDO ☢️</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --red: #e30613;
-            --toxic: #39ff14;
-            --dark: #0a0a0a;
-            --deep: #050505;
-            --accent: #ff004d;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREATE PERÚ MC — TEMPORADA 3: ORIGEN DEL MUNDO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --toxic: #39ff14;
+  --toxic-dim: rgba(57,255,20,0.15);
+  --toxic-glow: rgba(57,255,20,0.5);
+  --red: #e30613;
+  --red-dim: rgba(227,6,19,0.2);
+  --ash: #b0b0b0;
+  --dark: #0d0d0d;
+  --dark2: #111;
+  --dark3: #161616;
+  --card-bg: rgba(18,18,18,0.9);
+  --border: rgba(57,255,20,0.18);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Barlow', sans-serif;
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--deep);
-            color: #ddd;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-        /* Fondo radiactivo con partículas */
-        .bg-radiation {
-            position: fixed;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 50% 30%, rgba(57, 255, 20, 0.08) 0%, transparent 70%),
-                linear-gradient(180deg, #0a0a0a 0%, #1a0f0f 100%);
-            z-index: -2;
-            pointer-events: none;
-        }
+html { scroll-behavior: smooth; }
 
-        .scanline {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(transparent 50%, rgba(57, 255, 20, 0.03) 50%);
-            background-size: 100% 4px;
-            animation: scan 8s linear infinite;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.4;
-        }
+body {
+  font-family: var(--font-body);
+  background: var(--dark);
+  color: var(--ash);
+  overflow-x: hidden;
+  line-height: 1.6;
+  cursor: default;
+}
 
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
+/* ─── CURSOR PERSONALIZADO ─── */
+body { cursor: crosshair; }
+a, button { cursor: crosshair; }
 
-        /* Glitch effect */
-        .glitch {
-            position: relative;
-            color: var(--toxic);
-            font-weight: 900;
-            letter-spacing: -2px;
-            animation: glitch-skew 4s infinite linear alternate-reverse;
-        }
+/* ─── FONDO ATMOSFÉRICO ─── */
+.world-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(57,255,20,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(227,6,19,0.05) 0%, transparent 50%),
+    #0d0d0d;
+}
 
-        .glitch::before,
-        .glitch::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+/* Ruido de textura */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+}
 
-        .glitch::before {
-            color: var(--red);
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
-        }
+/* Scanlines */
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+}
 
-        .glitch::after {
-            color: #00ffff;
-            animation: glitch-anim2 2.5s infinite linear alternate-reverse;
-            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-        }
+/* ─── CANVAS PARTÍCULAS ─── */
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
 
-        @keyframes glitch-anim {
-            0% { transform: translate(-2px, 2px); }
-            20% { transform: translate(-4px, -2px); }
-            40% { transform: translate(4px, 2px); }
-        }
+/* ─── MÚSICA PLAYER ─── */
+#musicPlayer {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10,10,10,0.92);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 10px 18px 10px 10px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.6), 0 0 20px rgba(57,255,20,0.08);
+}
 
-        @keyframes glitch-anim2 {
-            0% { transform: translate(2px, -2px); }
-            30% { transform: translate(-2px, 4px); }
-        }
+#musicPlayer:hover {
+  border-color: rgba(57,255,20,0.5);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.8), 0 0 30px rgba(57,255,20,0.15);
+}
 
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            text-align: center;
-            padding: 20px;
-        }
+.music-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--toxic-dim);
+  color: var(--toxic);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: crosshair;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.music-btn:hover { background: rgba(57,255,20,0.25); transform: scale(1.1); }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; /* Cambia por una imagen post-apo real */
-            filter: brightness(0.3) contrast(1.2);
-            z-index: -1;
-        }
+.music-info { display: flex; flex-direction: column; gap: 2px; }
 
-        .hero-content {
-            max-width: 900px;
-            z-index: 2;
-        }
+.music-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--toxic);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.music-track { font-size: 11px; color: rgba(255,255,255,0.5); font-family: var(--font-body); }
 
-        .title {
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-            text-shadow: 0 0 40px var(--toxic);
-        }
+.music-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 18px;
+}
+.music-wave span {
+  display: block;
+  width: 3px;
+  background: var(--toxic);
+  border-radius: 2px;
+  opacity: 0.7;
+}
+.music-wave.playing span:nth-child(1) { animation: wave 0.8s ease-in-out infinite; }
+.music-wave.playing span:nth-child(2) { animation: wave 0.8s ease-in-out infinite 0.15s; }
+.music-wave.playing span:nth-child(3) { animation: wave 0.8s ease-in-out infinite 0.3s; }
+.music-wave.playing span:nth-child(4) { animation: wave 0.8s ease-in-out infinite 0.45s; }
+.music-wave span:nth-child(1) { height: 8px; }
+.music-wave span:nth-child(2) { height: 14px; }
+.music-wave span:nth-child(3) { height: 10px; }
+.music-wave span:nth-child(4) { height: 6px; }
 
-        .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
-        }
+@keyframes wave {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(2.2); }
+}
 
-        .countdown {
-            font-size: 2rem;
-            color: var(--toxic);
-            font-weight: bold;
-            text-shadow: 0 0 20px var(--toxic);
-            margin: 30px 0;
-            letter-spacing: 3px;
-        }
+.vol-slider {
+  -webkit-appearance: none;
+  width: 60px;
+  height: 2px;
+  background: rgba(57,255,20,0.2);
+  border-radius: 2px;
+  outline: none;
+  cursor: crosshair;
+}
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  background: var(--toxic);
+  border-radius: 50%;
+  cursor: crosshair;
+}
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 16px 32px;
-            margin: 10px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-        }
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px;
+}
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: translateX(-150%);
-            transition: transform 0.6s;
-        }
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&q=80') center/cover no-repeat;
+  filter: brightness(0.18) contrast(1.3) saturate(0.3);
+  z-index: 0;
+}
 
-        .btn:hover::before {
-            transform: translateX(300%);
-        }
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(13,13,13,0.4) 60%,
+    var(--dark) 100%
+  );
+  z-index: 1;
+}
 
-        .download {
-            background: linear-gradient(135deg, var(--toxic), #22c55e);
-            color: #000;
-            box-shadow: 0 0 30px rgba(57, 255, 20, 0.6);
-        }
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 860px;
+}
 
-        .discord {
-            background: #5865F2;
-            color: white;
-            box-shadow: 0 0 30px rgba(88, 101, 242, 0.6);
-        }
+.season-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--toxic);
+  border: 1px solid var(--border);
+  padding: 6px 18px;
+  border-radius: 2px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  background: var(--toxic-dim);
+  animation: pulse-border 3s ease-in-out infinite;
+}
 
-        .btn:hover {
-            transform: translateY(-6px) scale(1.08);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-        }
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(57,255,20,0.18); box-shadow: none; }
+  50% { border-color: rgba(57,255,20,0.6); box-shadow: 0 0 15px rgba(57,255,20,0.1); }
+}
 
-        .section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 4px;
+  text-shadow:
+    0 0 60px rgba(57,255,20,0.2),
+    0 0 120px rgba(57,255,20,0.08);
+  animation: hero-appear 1.2s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
 
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
-            color: var(--toxic);
-            text-align: center;
-            text-shadow: 0 0 15px var(--toxic);
-        }
+.hero-subtitle-server {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  letter-spacing: 8px;
+  color: var(--toxic);
+  margin-bottom: 35px;
+  text-shadow: 0 0 30px var(--toxic-glow);
+  animation: hero-appear 1.2s ease 0.2s forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
 
-        .lore-text {
-            max-width: 800px;
-            margin: 0 auto 60px;
-            font-size: 1.25rem;
-            opacity: 0.9;
-            text-align: left;
-        }
+@keyframes hero-appear {
+  to { opacity: 1; transform: translateY(0); }
+}
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
+.hero-lore {
+  font-size: 1.05rem;
+  color: rgba(180,180,180,0.85);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  font-weight: 300;
+  line-height: 1.9;
+  animation: hero-appear 1.2s ease 0.4s forwards;
+  opacity: 0;
+}
 
-        .card {
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            border-radius: 20px;
-            padding: 35px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(10px);
-        }
+.divider-rune {
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--toxic), transparent);
+  margin: 25px auto;
+  opacity: 0.5;
+}
 
-        .card:hover {
-            border-color: var(--toxic);
-            transform: translateY(-15px);
-            box-shadow: 0 25px 60px rgba(57, 255, 20, 0.25);
-        }
+.countdown-wrap {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 45px;
+  animation: hero-appear 1.2s ease 0.5s forwards;
+  opacity: 0;
+}
 
-        .ip {
-            background: #111;
-            border: 2px dashed var(--toxic);
-            padding: 16px;
-            border-radius: 12px;
-            font-family: 'Courier New', monospace;
-            font-size: 1.3rem;
-            margin: 15px 0;
-            color: var(--toxic);
-        }
+.countdown-wrap strong {
+  color: var(--toxic);
+  font-size: 1.2em;
+  text-shadow: 0 0 10px var(--toxic-glow);
+}
 
-        .trailer {
-            text-align: center;
-        }
+.hero-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: hero-appear 1.2s ease 0.7s forwards;
+  opacity: 0;
+}
 
-        .trailer iframe {
-            width: 100%;
-            max-width: 920px;
-            height: 520px;
-            border-radius: 20px;
-            border: 4px solid rgba(57, 255, 20, 0.3);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9);
-        }
+/* ─── BOTONES ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 3px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+  border: none;
+}
 
-        .particles {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-        }
+.btn-primary {
+  background: var(--toxic);
+  color: #000;
+  box-shadow: 0 0 0 0 var(--toxic-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(57,255,20,0.4), 0 0 0 1px var(--toxic);
+}
 
-        footer {
-            padding: 60px 20px;
-            text-align: center;
-            opacity: 0.7;
-            font-size: 0.95rem;
-        }
-    </style>
+.btn-secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.05);
+  transform: translateY(-3px);
+}
+
+.btn-discord {
+  background: #5865F2;
+  color: #fff;
+}
+.btn-discord:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(88,101,242,0.5);
+}
+
+/* ─── SECCIONES ─── */
+.section {
+  padding: 100px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--toxic);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 50px;
+  line-height: 1;
+}
+
+.section-title span { color: var(--toxic); }
+
+/* ─── SEPARADOR ─── */
+.sep {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(57,255,20,0.2), transparent);
+  margin: 0 20px;
+}
+
+/* ─── LORE ─── */
+.lore-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .lore-grid { grid-template-columns: 1fr; }
+}
+
+.lore-body {
+  font-size: 1.05rem;
+  color: rgba(180,180,180,0.85);
+  line-height: 2;
+  font-weight: 300;
+}
+.lore-body p + p { margin-top: 18px; }
+
+.lore-highlight {
+  border-left: 2px solid var(--toxic);
+  padding: 20px 24px;
+  background: var(--toxic-dim);
+  border-radius: 0 6px 6px 0;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--toxic);
+  line-height: 1.8;
+}
+
+.lore-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reactor-ring {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 1px solid rgba(57,255,20,0.15);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: ring-spin 20s linear infinite;
+}
+
+.reactor-ring::before {
+  content: '';
+  position: absolute;
+  inset: 15px;
+  border-radius: 50%;
+  border: 1px dashed rgba(57,255,20,0.1);
+}
+
+.reactor-ring::after {
+  content: '';
+  position: absolute;
+  inset: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(57,255,20,0.25);
+  box-shadow: 0 0 30px rgba(57,255,20,0.08) inset;
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+.reactor-core {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(57,255,20,0.3), rgba(57,255,20,0.05));
+  border-radius: 50%;
+  border: 1px solid rgba(57,255,20,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  animation: core-pulse 3s ease-in-out infinite, ring-spin 20s linear infinite reverse;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 40px rgba(57,255,20,0.2);
+}
+
+@keyframes core-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(57,255,20,0.2); }
+  50% { box-shadow: 0 0 60px rgba(57,255,20,0.5); }
+}
+
+/* ─── TRAILER ─── */
+.trailer-wrap {
+  text-align: center;
+}
+
+.video-container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(57,255,20,0.05);
+}
+
+.video-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(57,255,20,0.03) 0%, transparent 30%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.video-container iframe {
+  display: block;
+  width: 100%;
+  height: 500px;
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .video-container iframe { height: 220px; }
+}
+
+/* ─── INFO CARDS ─── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--toxic), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover {
+  border-color: rgba(57,255,20,0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(57,255,20,0.07);
+}
+
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--toxic-dim);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--toxic);
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: rgba(160,160,160,0.85);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 22px;
+}
+
+.ip-box {
+  background: rgba(0,0,0,0.5);
+  border: 1px dashed rgba(57,255,20,0.3);
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--toxic);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: crosshair;
+  transition: border-color 0.2s;
+}
+.ip-box:hover { border-color: rgba(57,255,20,0.7); }
+
+.copy-btn {
+  background: none;
+  border: 1px solid rgba(57,255,20,0.3);
+  border-radius: 4px;
+  color: var(--toxic);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  cursor: crosshair;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.copy-btn:hover {
+  background: var(--toxic-dim);
+  border-color: var(--toxic);
+}
+.copy-btn.copied {
+  background: rgba(34,197,94,0.15);
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+/* ─── FEATURES ─── */
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.feature-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.02);
+  transition: all 0.3s;
+}
+
+.feature-item:hover {
+  border-color: rgba(57,255,20,0.2);
+  background: var(--toxic-dim);
+}
+
+.feature-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--toxic);
+  border-radius: 50%;
+  margin-top: 7px;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--toxic-glow);
+}
+
+.feature-text strong {
+  display: block;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+}
+
+.feature-text span {
+  font-size: 0.85rem;
+  color: rgba(150,150,150,0.8);
+  font-weight: 300;
+}
+
+/* ─── CTA FINAL ─── */
+.cta-section {
+  text-align: center;
+  padding: 120px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(57,255,20,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-section .section-title {
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  max-width: 500px;
+  margin: 0 auto 50px;
+  color: rgba(160,160,160,0.8);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.9;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 40px 20px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(100,100,100,0.7);
+}
+
+footer span { color: var(--toxic); }
+
+/* ─── SCROLL REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── GLITCH HOVER EN TÍTULO ─── */
+.glitch-hover {
+  position: relative;
+}
+.glitch-hover:hover::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--red);
+  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+  transform: translate(-3px, 0);
+  opacity: 0.7;
+  animation: glitch-flash 0.15s steps(1) infinite;
+}
+@keyframes glitch-flash {
+  0%,100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+/* ─── BARRA DE PROGRESO ARRIBA ─── */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--toxic);
+  z-index: 9999;
+  transition: width 0.1s;
+  box-shadow: 0 0 8px var(--toxic-glow);
+}
+</style>
 </head>
 <body>
 
-    <div class="bg-radiation"></div>
-    <div class="scanline"></div>
-    <div class="particles" id="particles"></div>
+<div class="world-bg"></div>
+<div class="noise"></div>
+<div class="scanlines"></div>
+<canvas id="particleCanvas"></canvas>
+<div class="progress-bar" id="progressBar"></div>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="title glitch" data-text="CREATE PERÚ MC">CREATE PERÚ MC</h1>
-            <p class="subtitle">
-                ☢️ <strong>TEMPORADA 3 — ORIGEN DEL MUNDO</strong><br>
-                20 DE ABRIL 2026<br>
-                El reactor colapsó. La tecnología murió.<br>
-                Solo queda lo mecánico... y tú.
-            </p>
-            
-            <div class="countdown" id="countdown">⏳ Calculando tiempo hasta el colapso...</div>
+<!-- MÚSICA -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-            <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" class="btn download" id="modpackLink">
-                <i class="fas fa-download"></i> DESCARGAR MODPACK
-            </a>
-            <a href="https://discord.gg/sT6UbNVuU3" class="btn discord">
-                <i class="fab fa-discord"></i> UNIRSE AL REFUGIO
-            </a>
-        </div>
-    </section>
+<div id="musicPlayer">
+  <button class="music-btn" id="playBtn" onclick="toggleMusic()" title="Play/Pause">
+    <i class="fas fa-play" id="playIcon"></i>
+  </button>
+  <div class="music-info">
+    <span class="music-label">Ambient</span>
+    <span class="music-track">Temporada 3</span>
+  </div>
+  <div class="music-wave" id="musicWave">
+    <span></span><span></span><span></span><span></span>
+  </div>
+  <input type="range" class="vol-slider" id="volSlider" min="0" max="1" step="0.01" value="0.4" oninput="setVol(this.value)">
+</div>
 
-    <!-- TRAILER -->
-    <div class="section trailer">
-        <h2 class="glitch" data-text="EL INICIO DEL FIN">EL INICIO DEL FIN</h2>
-        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Trailer" allowfullscreen></iframe>
-        <p style="margin-top: 25px; opacity: 0.8; font-size: 1.1rem;">
-            Hace años... ocurrió lo impensable.
-        </p>
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="season-tag">☢&nbsp;&nbsp;Temporada 3 — Origen del Mundo&nbsp;&nbsp;☢</div>
+    <h1 class="hero-title glitch-hover" data-text="CREATE PERÚ MC">CREATE PERÚ MC</h1>
+    <p class="hero-subtitle-server">ORIGEN DEL MUNDO</p>
+    <div class="divider-rune"></div>
+    <p class="hero-lore">
+      El reactor colapsó. La red energética murió en segundos.<br>
+      Solo la mecánica sobrevivió. Solo <em>tú</em> puedes reconstruir el mundo.
+    </p>
+    <div class="countdown-wrap">
+      <span id="countdown">⏳ Calculando tiempo hasta el colapso...</span>
+    </div>
+    <div class="hero-btns">
+      <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" class="btn btn-primary">
+        <i class="fas fa-download"></i> Descargar Modpack
+      </a>
+      <a href="https://discord.gg/sT6UbNVuU3" class="btn btn-discord">
+        <i class="fab fa-discord"></i> Unirse al Discord
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══ LORE ═══ -->
+<div class="section reveal">
+  <p class="section-label">// Lore</p>
+  <h2 class="section-title">El <span>Colapso</span></h2>
+  <div class="lore-grid">
+    <div class="lore-body">
+      <p>Hace años, el Gran Reactor Andino prometía energía infinita. Durante décadas alimentó fábricas, ciudades y sueños. Nadie preguntó qué pasaría si fallaba.</p>
+      <p>Un error en el núcleo desencadenó una reacción que nadie pudo detener. En 47 segundos, la red colapsó. La tecnología avanzada dejó de funcionar para siempre.</p>
+      <p>Lo que quedó fue ceniza, tierra y engranajes. Y entre los escombros… tú.</p>
+    </div>
+    <div>
+      <div class="lore-highlight">
+        > Sistema operativo: OFFLINE<br>
+        > Tecnología avanzada: DESTRUIDA<br>
+        > Mecánica de vapor: ACTIVA<br>
+        > Protocolo de supervivencia: INICIADO<br>
+        > Estado del mundo: ORIGEN
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══ TRAILER ═══ -->
+<div class="section reveal">
+  <p class="section-label">// Trailer</p>
+  <h2 class="section-title">El <span>Inicio del Fin</span></h2>
+  <div class="trailer-wrap">
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Trailer Temporada 3" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══ SERVIDOR + MODPACK + COMUNIDAD ═══ -->
+<div class="section reveal">
+  <p class="section-label">// Acceso</p>
+  <h2 class="section-title">Únete al <span>Refugio</span></h2>
+  <div class="cards-grid">
+
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-server"></i></div>
+      <h3>Servidor</h3>
+      <p>Conéctate directamente desde Minecraft con cualquiera de estas IPs.</p>
+      <div class="ip-box" id="ip1">
+        <span>createperumc.bean.pe</span>
+        <button class="copy-btn" onclick="copyIP('ip1', this)">COPIAR</button>
+      </div>
+      <div class="ip-box" id="ip2">
+        <span>45.58.126.118:24562</span>
+        <button class="copy-btn" onclick="copyIP('ip2', this)">COPIAR</button>
+      </div>
     </div>
 
-    <!-- INFO CARDS -->
-    <div class="section">
-        <h2>ÚNETE AL REFUGIO</h2>
-        <div class="cards">
-            <div class="card">
-                <h3>Servidor</h3>
-                <div class="ip" id="ip">createperumc.bean.pe</div>
-                <button onclick="copyIP('ip')" class="btn download" style="width:100%; justify-content:center;">Copiar IP</button>
-                <div class="ip" id="ip2">45.58.126.118:24562</div>
-                <button onclick="copyIP('ip2')" class="btn download" style="width:100%; justify-content:center;">Copiar IP Numérica</button>
-            </div>
-
-            <div class="card">
-                <h3>Modpack</h3>
-                <p style="opacity:0.85; margin:20px 0;">
-                    Enfocado en <strong>Create + addons</strong>.<br>
-                    Solo mecánica robusta sobrevive.
-                </p>
-                <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" id="modpackLink2" class="btn download" style="width:100%; justify-content:center;">
-                    <i class="fas fa-download"></i> Descargar Modpack
-                </a>
-            </div>
-
-            <div class="card">
-                <h3>Comunidad</h3>
-                <p style="opacity:0.85; margin:20px 0;">
-                    Eventos, soporte y supervivientes como tú.
-                </p>
-                <a href="https://discord.gg/sT6UbNVuU3" class="btn discord" style="width:100%; justify-content:center;">
-                    <i class="fab fa-discord"></i> Entrar al Discord
-                </a>
-            </div>
-        </div>
+    <div class="card">
+      <div class="card-icon"><i class="fas fa-cogs"></i></div>
+      <h3>Modpack</h3>
+      <p>Basado en <strong style="color:#fff;">Create + addons</strong>. Mecánica robusta, sin tecnología que no se pueda ver ni tocar.</p>
+      <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:auto;">
+        <i class="fas fa-download"></i> Descargar en CurseForge
+      </a>
     </div>
 
-    <footer>
-        ☢️ El mundo murió… pero algo nuevo está comenzando.<br>
-        Create Perú MC — Temporada 3 • 2026
-    </footer>
+    <div class="card">
+      <div class="card-icon"><i class="fab fa-discord"></i></div>
+      <h3>Comunidad</h3>
+      <p>Eventos, soporte técnico, anuncios y supervivientes como tú. La resistencia nace aquí.</p>
+      <a href="https://discord.gg/sT6UbNVuU3" class="btn btn-discord" style="width:100%; justify-content:center; margin-top:auto;">
+        <i class="fab fa-discord"></i> Entrar al Discord
+      </a>
+    </div>
 
-    <script>
-        // Config
-        const CONFIG = {
-            modpack: "https://www.curseforge.com/minecraft/modpacks/create-peru-season-3",
-            release: "2026-04-20T00:00:00"
-        };
+  </div>
+</div>
 
-        // Enlaces
-        document.getElementById("modpackLink").href = CONFIG.modpack;
-        document.getElementById("modpackLink2").href = CONFIG.modpack;
+<div class="sep"></div>
 
-        // Countdown épico
-        function updateCountdown() {
-            const cd = document.getElementById("countdown");
-            const release = new Date(CONFIG.release);
-            const now = new Date();
-            const diff = release - now;
+<!-- ═══ FEATURES ═══ -->
+<div class="section reveal">
+  <p class="section-label">// Mecánicas</p>
+  <h2 class="section-title">¿Qué <span>trae</span> la T3?</h2>
+  <div class="features-list">
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div class="feature-text">
+        <strong>Create + Addons completos</strong>
+        <span>Cinturones, trenes, turbinas, fundición. Todo mecánico.</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div class="feature-text">
+        <strong>Lore integrado</strong>
+        <span>Historia que evoluciona con eventos del servidor.</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div class="feature-text">
+        <strong>Mundo post-apocalíptico</strong>
+        <span>Terreno devastado, ruinas y secretos por descubrir.</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div class="feature-text">
+        <strong>Economía de supervivencia</strong>
+        <span>Recursos escasos. Comercio, alianzas o competencia.</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div class="feature-text">
+        <strong>Eventos exclusivos</strong>
+        <span>Raids al reactor, competencias de construcción, más.</span>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="feature-dot"></div>
+      <div class="feature-text">
+        <strong>Soporte activo</strong>
+        <span>Staff peruano, horarios de América Latina.</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-            if (diff <= 0) {
-                cd.innerHTML = "☢️ TEMPORADA 3 YA ESTÁ AQUÍ ☢️";
-                cd.style.color = "#e30613";
-                return;
-            }
+<!-- ═══ CTA FINAL ═══ -->
+<div class="cta-section reveal">
+  <p class="section-label">// 20 de Abril, 2026</p>
+  <h2 class="section-title glitch-hover" data-text="¿ESTÁS LISTO?">¿Estás <span>Listo?</span></h2>
+  <p>El mundo murió. Pero algo nuevo está comenzando.<br>La temporada 3 empieza el 20 de Abril.</p>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+    <a href="https://www.curseforge.com/minecraft/modpacks/create-peru-season-3" class="btn btn-primary">
+      <i class="fas fa-download"></i> Descargar Modpack
+    </a>
+    <a href="https://discord.gg/sT6UbNVuU3" class="btn btn-discord">
+      <i class="fab fa-discord"></i> Discord
+    </a>
+  </div>
+</div>
 
-            const days = Math.floor(diff / 86400000);
-            const hours = Math.floor((diff % 86400000) / 3600000);
-            const minutes = Math.floor((diff % 3600000) / 60000);
+<footer>
+  <span>☢</span> &nbsp;Create Perú MC — Temporada 3 — 2026&nbsp; <span>☢</span><br><br>
+  El mundo murió… pero algo nuevo está comenzando.
+</footer>
 
-            cd.innerHTML = `⏳ EL COLAPSO FINAL EN: <strong>${days}d ${hours}h ${minutes}m</strong>`;
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+<script>
+/* ─── CONFIG ─── */
+const RELEASE = new Date("2026-04-20T00:00:00");
 
-        // Copiar IP con feedback
-        function copyIP(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const btns = document.querySelectorAll(`button[onclick="copyIP('${id}')"]`);
-                btns.forEach(btn => {
-                    const original = btn.innerHTML;
-                    btn.innerHTML = "✅ COPIADO";
-                    btn.style.background = "#22c55e";
-                    setTimeout(() => {
-                        btn.innerHTML = original;
-                        btn.style.background = "";
-                    }, 2000);
-                });
-            });
-        }
+/* ─── COUNTDOWN ─── */
+function tick() {
+  const now = new Date();
+  const diff = RELEASE - now;
+  const el = document.getElementById("countdown");
+  if (diff <= 0) {
+    el.innerHTML = '<span style="color:var(--toxic)">☢ TEMPORADA 3 YA ESTÁ AQUÍ ☢</span>';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  el.innerHTML = `COLAPSO EN: <strong>${d}d ${h}h ${m}m ${s}s</strong>`;
+}
+setInterval(tick, 1000);
+tick();
 
-        // Partículas tóxicas simples (CSS + JS ligero)
-        function createParticle() {
-            const p = document.createElement("div");
-            p.style.position = "absolute";
-            p.style.width = "4px";
-            p.style.height = "4px";
-            p.style.background = "rgba(57, 255, 20, 0.6)";
-            p.style.borderRadius = "50%";
-            p.style.left = Math.random() * 100 + "vw";
-            p.style.top = "-10px";
-            p.style.opacity = Math.random() * 0.6 + 0.3;
-            p.style.animation = `fall ${Math.random() * 15 + 10}s linear forwards`;
-            document.getElementById("particles").appendChild(p);
+/* ─── COPIAR IP ─── */
+function copyIP(id, btn) {
+  const text = document.getElementById(id).querySelector("span").innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = "✓ COPIADO";
+    btn.classList.add("copied");
+    setTimeout(() => {
+      btn.textContent = "COPIAR";
+      btn.classList.remove("copied");
+    }, 2000);
+  });
+}
 
-            setTimeout(() => p.remove(), 25000);
-        }
+/* ─── MÚSICA ─── */
+const audio = document.getElementById("bgMusic");
+const playIcon = document.getElementById("playIcon");
+const wave = document.getElementById("musicWave");
+let playing = false;
 
-        setInterval(() => {
-            if (Math.random() > 0.4) createParticle();
-        }, 120);
+audio.volume = 0.4;
 
-        // Añadir keyframes para partículas
-        const style = document.createElement("style");
-        style.innerHTML = `
-            @keyframes fall {
-                to {
-                    transform: translateY(110vh);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+function toggleMusic() {
+  if (playing) {
+    audio.pause();
+    playIcon.className = "fas fa-play";
+    wave.classList.remove("playing");
+  } else {
+    audio.play().catch(() => {});
+    playIcon.className = "fas fa-pause";
+    wave.classList.add("playing");
+  }
+  playing = !playing;
+}
+
+function setVol(v) {
+  audio.volume = parseFloat(v);
+}
+
+/* ─── PROGRESO SCROLL ─── */
+window.addEventListener("scroll", () => {
+  const prog = document.getElementById("progressBar");
+  const s = document.documentElement.scrollTop;
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  prog.style.width = (s / h * 100) + "%";
+});
+
+/* ─── SCROLL REVEAL ─── */
+const reveals = document.querySelectorAll(".reveal");
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+/* ─── PARTÍCULAS CANVAS ─── */
+const canvas = document.getElementById("particleCanvas");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = -Math.random() * 0.5 - 0.1;
+    this.life = 1;
+    this.decay = Math.random() * 0.003 + 0.001;
+    this.size = Math.random() * 2 + 0.5;
+    this.type = Math.random() > 0.7 ? "ash" : "toxic";
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life -= this.decay;
+    if (this.life <= 0) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.life * 0.5;
+    if (this.type === "toxic") {
+      ctx.fillStyle = "#39ff14";
+      ctx.shadowColor = "#39ff14";
+      ctx.shadowBlur = 4;
+    } else {
+      ctx.fillStyle = "#888";
+      ctx.shadowBlur = 0;
+    }
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function animLoop() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animLoop);
+}
+animLoop();
+</script>
 </body>
 </html>
