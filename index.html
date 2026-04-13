@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CREATE PERÚ MC 🔥 | Survival Técnico</title>
+    <title>CREATE PERÚ MC ☢️ | Survival Técnico</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
             --red: #e30613;
             --green: #22c55e;
             --dark: #0a0a0a;
+            --toxic: #39ff14;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,13 +31,12 @@
             opacity: 0.55;
         }
 
-        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(227,6,19,0.88), rgba(10,10,10,0.95));
+            background: linear-gradient(135deg, rgba(57,255,20,0.25), rgba(10,10,10,0.95));
             padding: 20px 15px;
         }
 
@@ -55,10 +55,10 @@
             font-size: clamp(2.6rem, 10vw, 5rem);
             font-weight: 900;
             letter-spacing: -2px;
-            background: linear-gradient(90deg, #e30613, #fff, #e30613);
+            background: linear-gradient(90deg, #39ff14, #fff, #e30613);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(227,6,19,0.7);
+            text-shadow: 0 0 40px rgba(57,255,20,0.5);
             margin-bottom: 8px;
         }
 
@@ -68,7 +68,6 @@
             margin-bottom: 40px;
         }
 
-        /* Botones */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -93,7 +92,6 @@
         .discord { background: #5865F2; color: white; }
         .copy { background: var(--red); color: white; }
 
-        /* Sección de cards */
         .section {
             padding: 60px 15px 80px;
             max-width: 1100px;
@@ -117,7 +115,7 @@
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 40px -15px rgba(227,6,19,0.5);
+            box-shadow: 0 20px 40px -15px rgba(57,255,20,0.4);
         }
 
         .ip-container {
@@ -130,7 +128,6 @@
             word-break: break-all;
         }
 
-        /* Música */
         .music-btn {
             position: fixed;
             bottom: 20px;
@@ -145,7 +142,6 @@
             z-index: 100;
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 95px;
@@ -178,7 +174,6 @@
             50% { transform: rotate(6deg); }
         }
 
-        /* Pequeños ajustes para móviles */
         @media (min-width: 768px) {
             .cards { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
             .btn { width: auto; max-width: none; display: inline-flex; }
@@ -188,142 +183,176 @@
 </head>
 <body>
 
-    <canvas id="bg"></canvas>
+<canvas id="bg"></canvas>
 
-    <audio id="music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="flag">🇵🇪</div>
-            <h1 class="title">CREATE PERÚ MC</h1>
-            <p class="subtitle">Survival Técnico con Create TEMPORADA 2<br>¡Construye, automatiza y domina!<br>NEOFORGE 1.21.1 BUILD #219</p>
-            
-            <a href="https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file" target="_blank" class="btn download">
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="flag">🇵🇪</div>
+        <h1 class="title">CREATE PERÚ MC</h1>
+        <p class="subtitle">
+            ☢️ TEMPORADA 3 PRÓXIMAMENTE ☢️<br>
+            El mundo colapsó... la tecnología avanzada murió.<br>
+            Solo lo mecánico sobrevive.<br>
+            <span style="opacity:0.7;">NEOFORGE 1.21.1</span>
+        </p>
+
+        <a href="#" id="modpackLink" class="btn download">
+            <i class="fas fa-download"></i> Descargar Modpack
+        </a>
+
+        <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
+            <i class="fab fa-discord"></i> Unirse al Discord
+        </a>
+    </div>
+</section>
+
+<!-- TRAILER -->
+<div class="section">
+    <div class="card" style="max-width:900px; margin:auto;">
+        <h2><i class="fas fa-film"></i> Trailer Temporada 3</h2>
+
+        <div style="margin-top:20px; border-radius:15px; overflow:hidden;">
+            <!-- CAMBIAR VIDEO_ID -->
+            <iframe width="100%" height="400"
+                src="https://www.youtube.com/embed/VIDEO_ID"
+                frameborder="0" allowfullscreen>
+            </iframe>
+        </div>
+
+        <p style="margin-top:15px; opacity:0.7;">
+            Próximamente... la caída del mundo comienza aquí.
+        </p>
+    </div>
+</div>
+
+<!-- CONTENIDO -->
+<div class="section">
+    <div class="cards">
+
+        <div class="card">
+            <h2><i class="fas fa-server"></i> IP del Servidor</h2>
+            <div class="ip-container" id="ip">createperumc.bean.pe</div>
+            <button class="btn copy" onclick="copyIP()">
+                <i class="fas fa-copy"></i> Copiar IP
+            </button>
+
+            <p style="margin: 25px 0 10px; opacity: 0.8;">IP Alternativa:</p>
+            <div class="ip-container" id="ip2">45.58.126.118:24562</div>
+            <button class="btn copy" onclick="copyIP2()">
+                <i class="fas fa-copy"></i> Copiar Numérica
+            </button>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-box"></i> Modpack</h2>
+            <p style="margin: 20px 0; font-size: 1.1rem; opacity: 0.9;">
+                Modpack optimizado con temática post-apocalíptica.<br>
+                Enfocado en Create y supervivencia extrema.
+            </p>
+
+            <a href="#" id="modpackLink2" class="btn download">
                 <i class="fas fa-download"></i> Descargar Modpack
             </a>
+        </div>
+
+        <div class="card">
+            <h2><i class="fab fa-discord"></i> Comunidad</h2>
+            <p style="margin: 25px 0; font-size: 1.1rem; opacity: 0.9;">
+                Únete a la comunidad técnica latina.<br>
+                Eventos, ayuda y amigos.
+            </p>
+
             <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
-                <i class="fab fa-discord"></i> Unirse al Discord
+                <i class="fab fa-discord"></i> Entrar al Discord
             </a>
         </div>
-    </section>
 
-    <!-- Contenido -->
-    <div class="section">
-        <div class="cards">
-
-            <div class="card">
-                <h2><i class="fas fa-server"></i> IP del Servidor</h2>
-                <div class="ip-container" id="ip">createperumc.bean.pe</div>
-                <button class="btn copy" onclick="copyIP()">
-                    <i class="fas fa-copy"></i> Copiar IP
-                </button>
-
-                <p style="margin: 25px 0 10px; opacity: 0.8;">IP Alternativa:</p>
-                <div class="ip-container" id="ip2">45.58.126.118:24562</div>
-                <button class="btn copy" onclick="copyIP2()">
-                    <i class="fas fa-copy"></i> Copiar Numérica
-                </button>
-            </div>
-
-            <div class="card">
-                <h2><i class="fas fa-box"></i> Modpack</h2>
-                <p style="margin: 20px 0; font-size: 1.1rem; opacity: 0.9;">
-                    Modpack optimizado de Create para Survival Técnico.<br>
-                    Automatización avanzada y mucha diversión.
-                </p>
-                <a href="https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file"_blank" class="btn download">
-                    <i class="fas fa-download"></i> Descargar Modpack
-                </a>
-            </div>
-
-            <div class="card">
-                <h2><i class="fab fa-discord"></i> Comunidad</h2>
-                <p style="margin: 25px 0; font-size: 1.1rem; opacity: 0.9;">
-                    Únete a la comunidad Tecnica latina.<br>
-                    Eventos, ayuda y amigos.
-                </p>
-                <a href="https://discord.gg/sT6UbNVuU3" target="_blank" class="btn discord">
-                    <i class="fab fa-discord"></i> Entrar al Discord
-                </a>
-            </div>
-
-        </div>
     </div>
+</div>
 
-    <button class="music-btn" onclick="toggleMusic()" title="Música">🎵</button>
-    <div id="toast" class="toast">✅ ¡Copiado!</div>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+<div id="toast" class="toast">✅ ¡Copiado!</div>
 
-    <script>
-        // Canvas partículas (optimizado para móvil)
-        const canvas = document.getElementById("bg");
-        const ctx = canvas.getContext("2d");
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
+<script>
+const CONFIG = {
+    modpack: "https://www.mediafire.com/file/hgi895l2vrsjta4/MODPACK_TEMPORADA2_V4.zip/file"
+};
 
-        let particles = [];
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 0.8;
-                this.speed = Math.random() * 0.7 + 0.3;
-            }
-            update() {
-                this.y += this.speed;
-                if (this.y > canvas.height) this.reset();
-            }
-            draw() {
-                ctx.fillStyle = Math.random() > 0.5 ? "#ff3333" : "#22c55e";
-                ctx.globalAlpha = 0.6;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+document.getElementById("modpackLink").href = CONFIG.modpack;
+document.getElementById("modpackLink2").href = CONFIG.modpack;
 
-        for (let i = 0; i < (window.innerWidth < 768 ? 70 : 130); i++) {
-            particles.push(new Particle());
-        }
+// canvas partículas
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
 
-        function animate() {
-            ctx.fillStyle = "rgba(10,10,10,0.18)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
-        // Música y Copiar (mismo que antes)
-        let music = document.getElementById("music");
-        document.addEventListener("click", () => music.play().catch(()=>{}), {once:true});
+let particles = [];
+class Particle {
+    constructor() { this.reset(); }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2.5 + 0.8;
+        this.speed = Math.random() * 0.7 + 0.3;
+    }
+    update() {
+        this.y += this.speed;
+        if (this.y > canvas.height) this.reset();
+    }
+    draw() {
+        ctx.fillStyle = Math.random() > 0.5 ? "#39ff14" : "#ff3333";
+        ctx.globalAlpha = 0.6;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
 
-        function toggleMusic() {
-            music.paused ? music.play() : music.pause();
-        }
+for (let i = 0; i < 100; i++) particles.push(new Particle());
 
-        function copyIP() {
-            navigator.clipboard.writeText(document.getElementById("ip").innerText);
-            showToast();
-        }
-        function copyIP2() {
-            navigator.clipboard.writeText(document.getElementById("ip2").innerText);
-            showToast();
-        }
+function animate() {
+    ctx.fillStyle = "rgba(10,10,10,0.18)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+}
+animate();
 
-        function showToast() {
-            const t = document.getElementById("toast");
-            t.classList.add("show");
-            setTimeout(() => t.classList.remove("show"), 2500);
-        }
-    </script>
+// música
+let music = document.getElementById("music");
+document.addEventListener("click", () => music.play().catch(()=>{}), {once:true});
+
+function toggleMusic() {
+    music.paused ? music.play() : music.pause();
+}
+
+// copiar
+function copyIP() {
+    navigator.clipboard.writeText(document.getElementById("ip").innerText);
+    showToast();
+}
+function copyIP2() {
+    navigator.clipboard.writeText(document.getElementById("ip2").innerText);
+    showToast();
+}
+
+function showToast() {
+    const t = document.getElementById("toast");
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2500);
+}
+</script>
+
 </body>
 </html>
