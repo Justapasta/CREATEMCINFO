@@ -743,6 +743,123 @@ footer span { color: var(--toxic); }
   transform: translateY(0);
 }
 
+/* ─── INTRO SPLASH ─── */
+#introSplash {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  cursor: crosshair;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+#introSplash.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(57,255,20,0.07) 0%, transparent 70%),
+    #000;
+}
+.splash-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(57,255,20,0.02) 2px, rgba(57,255,20,0.02) 4px
+  );
+  pointer-events: none;
+}
+.splash-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.splash-warning {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--red);
+  border: 1px solid rgba(227,6,19,0.4);
+  padding: 5px 16px;
+  border-radius: 2px;
+  background: rgba(227,6,19,0.07);
+  animation: pulse-border 2s ease-in-out infinite;
+}
+.splash-logo {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 15vw, 7rem);
+  color: #fff;
+  letter-spacing: 4px;
+  line-height: 0.9;
+  text-shadow: 0 0 60px rgba(57,255,20,0.15);
+}
+.splash-logo span { color: var(--toxic); }
+.splash-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(0.65rem, 2vw, 0.85rem);
+  letter-spacing: 5px;
+  color: rgba(180,180,180,0.6);
+}
+.splash-divider {
+  width: 160px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(57,255,20,0.4), transparent);
+}
+.splash-enter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.splash-btn {
+  background: var(--toxic);
+  color: #000;
+  border: none;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  letter-spacing: 4px;
+  padding: 16px clamp(28px, 6vw, 48px);
+  border-radius: 3px;
+  cursor: crosshair;
+  transition: all 0.25s;
+  animation: btn-breathe 2.5s ease-in-out infinite;
+}
+.splash-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(57,255,20,0.5);
+}
+@keyframes btn-breathe {
+  0%,100% { box-shadow: 0 0 15px rgba(57,255,20,0.3); }
+  50% { box-shadow: 0 0 35px rgba(57,255,20,0.6); }
+}
+.splash-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: rgba(100,100,100,0.7);
+}
+.splash-date {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  letter-spacing: 3px;
+  color: rgba(57,255,20,0.7);
+  margin-top: 4px;
+}
+
 /* ─── GLITCH HOVER EN TÍTULO ─── */
 .glitch-hover {
   position: relative;
@@ -776,6 +893,23 @@ footer span { color: var(--toxic); }
 </style>
 </head>
 <body>
+
+<!-- ═══ INTRO SPLASH ═══ -->
+<div id="introSplash">
+  <div class="splash-bg"></div>
+  <div class="splash-scanlines"></div>
+  <div class="splash-content">
+    <div class="splash-warning">☢ &nbsp;SEÑAL DETECTADA&nbsp; ☢</div>
+    <div class="splash-logo">CREATE<br><span>PERÚ MC</span></div>
+    <div class="splash-sub">TEMPORADA 3 — ORIGEN DEL MUNDO</div>
+    <div class="splash-divider"></div>
+    <div class="splash-date">20 · ABRIL · 2026</div>
+    <div class="splash-enter">
+      <button class="splash-btn" onclick="enterSite()">INGRESAR AL REFUGIO</button>
+      <span class="splash-hint">[ activa el audio y entra al mundo ]</span>
+    </div>
+  </div>
+</div>
 
 <div class="world-bg"></div>
 <div class="noise"></div>
@@ -982,6 +1116,41 @@ footer span { color: var(--toxic); }
 </footer>
 
 <script>
+/* ─── MÚSICA ─── */
+const audio = document.getElementById("bgMusic");
+const playIcon = document.getElementById("playIcon");
+const wave = document.getElementById("musicWave");
+let playing = false;
+audio.volume = 0.4;
+
+function toggleMusic() {
+  if (playing) {
+    audio.pause();
+    playIcon.className = "fas fa-play";
+    wave.classList.remove("playing");
+  } else {
+    audio.play().catch(() => {});
+    playIcon.className = "fas fa-pause";
+    wave.classList.add("playing");
+  }
+  playing = !playing;
+}
+
+function setVol(v) {
+  audio.volume = parseFloat(v);
+}
+
+/* ─── INTRO SPLASH ─── */
+function enterSite() {
+  const splash = document.getElementById("introSplash");
+  splash.classList.add("hidden");
+  audio.play().then(() => {
+    playIcon.className = "fas fa-pause";
+    wave.classList.add("playing");
+    playing = true;
+  }).catch(() => {});
+}
+
 /* ─── CONFIG ─── */
 const RELEASE = new Date("2026-04-20T00:00:00");
 
@@ -1014,31 +1183,6 @@ function copyIP(id, btn) {
       btn.classList.remove("copied");
     }, 2000);
   });
-}
-
-/* ─── MÚSICA ─── */
-const audio = document.getElementById("bgMusic");
-const playIcon = document.getElementById("playIcon");
-const wave = document.getElementById("musicWave");
-let playing = false;
-
-audio.volume = 0.4;
-
-function toggleMusic() {
-  if (playing) {
-    audio.pause();
-    playIcon.className = "fas fa-play";
-    wave.classList.remove("playing");
-  } else {
-    audio.play().catch(() => {});
-    playIcon.className = "fas fa-pause";
-    wave.classList.add("playing");
-  }
-  playing = !playing;
-}
-
-function setVol(v) {
-  audio.volume = parseFloat(v);
 }
 
 /* ─── PROGRESO SCROLL ─── */
